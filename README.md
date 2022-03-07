@@ -12,7 +12,7 @@ The embedder currently supports:
 # INSTALLATION
 1. Clone the repo
 2. Install the dependencies
-3. Create a SQLite database (`sqlite3 tidalfix.db`)
+3. Create a SQLite database (`sqlite3 tidalfix.db`) **name must be tidalfix.db, you can change it in index.js at line 5**
 4. Recreate the TIDALFIX database schema by running `sqlite3 dump.db`
 5. Make sure the tables were created correctly using `.tables`
 6. Start the server using `node index.js`
