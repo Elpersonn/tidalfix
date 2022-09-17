@@ -1,0 +1,6 @@
+const fs = require('node:fs')
+const Database = require('better-sqlite3')
+const database = new Database('tidalfix.db')
+database.exec(fs.readFileSync('dump.sql'))
+database.close()
+console.log('database ready')

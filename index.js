@@ -1,4 +1,5 @@
 const express = require('express')
+const crypt = require("node:crypto")
 const http = require('http')
 const puppeteer = require('puppeteer')
 const teplates = require('sprightly')
@@ -112,6 +113,22 @@ app.get('/browse/artist/:id/json', async (req, res) => {
     })
 })
 
+app.get('/gitPush', async (req, res) => {
+    let secure = req.get('x-hub-signature-256')
+
+    if (secure != undefined) {
+        let verif = crypt.verify('SHA256', req.body, "killer  fish... killer fish from San Diego. I don't know what I am but I taste really good", secure)
+        if (verif) {
+            console.log('good')
+        }else {
+            res.status(401).send('nice try')
+        }
+    }else {
+        res.status(400).send('missing')
+    }
+})
+
+// all of the browse code could be boiled down to a single thing tbf
 app.get('(/browse)?/track/:id', async (req, res) => {
     console.log("TRACK REQUESTED")
     let dbres = await findtrack.get(req.params.id)
