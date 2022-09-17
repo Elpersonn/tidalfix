@@ -21,7 +21,6 @@ const insertbadtrack = db.prepare("INSERT OR IGNORE INTO track_blacklist (ID) VA
 const findtrack = db.prepare("SELECT * FROM tracks WHERE id = ?")
 const inserttrack = db.prepare("INSERT OR IGNORE INTO tracks (id, created, title, description, image) VALUES (?, strftime('%s', 'now'), ?, ?, ?)")
 
-
 // woohoo i just love writing 500 sql prepared statements...
 console.log("STARTING TIDALFIX V0.3\nMADE BY ELPERSON 2022")
 const app = express()
