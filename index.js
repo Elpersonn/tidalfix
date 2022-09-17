@@ -1,8 +1,11 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const express = require('express')
 const crypt = require("node:crypto")
 const http = require('http')
 const puppeteer = require('puppeteer')
 const teplates = require('sprightly')
+import {secret} from './config.mjs'
 //const Tidal = require('tidalapi')
 const db = require('better-sqlite3')('tidalfix.db')
 const getid = db.prepare("SELECT * FROM embeds WHERE ID = ?")
@@ -17,7 +20,6 @@ const findbadtrack = db.prepare("SELECT * FROM track_blacklist WHERE ID = ?")
 const insertbadtrack = db.prepare("INSERT OR IGNORE INTO track_blacklist (ID) VALUES (?)")
 const findtrack = db.prepare("SELECT * FROM tracks WHERE id = ?")
 const inserttrack = db.prepare("INSERT OR IGNORE INTO tracks (id, created, title, description, image) VALUES (?, strftime('%s', 'now'), ?, ?, ?)")
-import { secret } from 'config.js'
 
 
 // woohoo i just love writing 500 sql prepared statements...
