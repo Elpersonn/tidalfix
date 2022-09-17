@@ -17,7 +17,7 @@ const findbadtrack = db.prepare("SELECT * FROM track_blacklist WHERE ID = ?")
 const insertbadtrack = db.prepare("INSERT OR IGNORE INTO track_blacklist (ID) VALUES (?)")
 const findtrack = db.prepare("SELECT * FROM tracks WHERE id = ?")
 const inserttrack = db.prepare("INSERT OR IGNORE INTO tracks (id, created, title, description, image) VALUES (?, strftime('%s', 'now'), ?, ?, ?)")
-
+import { secret } from 'config.js'
 
 
 // woohoo i just love writing 500 sql prepared statements...
@@ -117,7 +117,7 @@ app.post('/gitPush', async (req, res) => {
     let secure = req.get('x-hub-signature-256')
 
     if (secure != undefined) {
-        let verif = crypt.verify('SHA256', req.body, "killer  fish... killer fish from San Diego. I don't know what I am but I taste really good", secure)
+        let verif = crypt.verify('SHA256', req.body, secret, secure)
         if (verif) {
             console.log('good')
         }else {
