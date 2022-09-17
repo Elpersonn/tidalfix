@@ -1,0 +1,11 @@
+<!DOCTYPE HTML> 
+<html>
+    <head>
+        <meta property="og:site_name" content="TIDALFIX made by Elperson" />
+        <meta property="og:title" content="{{ title }}" />
+        <meta property="og:description" content="{{ description }}" />
+        <meta property="og:image" content="{{ image }}" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <link type="application/json+oembed" href="/browse/track/{{ request }}/json" />
+    </head>
+</html>
