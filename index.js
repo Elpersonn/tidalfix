@@ -113,7 +113,7 @@ app.get('/browse/artist/:id/json', async (req, res) => {
     })
 })
 
-app.get('/gitPush', async (req, res) => {
+app.post('/gitPush', async (req, res) => {
     let secure = req.get('x-hub-signature-256')
 
     if (secure != undefined) {
