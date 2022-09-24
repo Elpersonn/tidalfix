@@ -251,5 +251,5 @@ app.get('(/browse)?/album/:id', async (req, res) => {
 
 app.listen(port, '0.0.0.0', () => {
     console.log("Starting server...")
-    console.warn(`Running on port ${port})
+    console.warn(`Running on port ${port}`)
 })
