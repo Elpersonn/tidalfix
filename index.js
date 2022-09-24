@@ -28,7 +28,7 @@ const findtrack = db.prepare("SELECT * FROM tracks WHERE id = ?")
 const inserttrack = db.prepare("INSERT OR IGNORE INTO tracks (id, created, title, description, image) VALUES (?, strftime('%s', 'now'), ?, ?, ?)")
 
 // woohoo i just love writing 500 sql prepared statements...
-console.log("STARTING TIDALFIX V0.3\nMADE BY ELPERSON 2022")
+console.log("STARTING TIDALFIX V0.4\nMADE BY ELPERSON 2022")
 const app = express()
 
 app.engine('spy', teplates)
@@ -251,4 +251,5 @@ app.get('(/browse)?/album/:id', async (req, res) => {
 
 app.listen(port, '0.0.0.0', () => {
     console.log("Starting server...")
+    console.warn(`Running on port ${port})
 })
