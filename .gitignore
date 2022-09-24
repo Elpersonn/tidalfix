@@ -6,3 +6,4 @@ test.*
 .idea/*
 *.key
 *.pem
+nohup.out
