@@ -5,7 +5,13 @@ const crypt = require("node:crypto")
 const http = require('http')
 const puppeteer = require('puppeteer')
 const teplates = require('sprightly')
+
 import {secret} from './config.mjs'
+import { exec } from 'node:child_process'
+import { pid } from 'node:process'
+
+
+
 //const Tidal = require('tidalapi')
 const db = require('better-sqlite3')('tidalfix.db')
 const getid = db.prepare("SELECT * FROM embeds WHERE ID = ?")
@@ -15,7 +21,7 @@ const insertfound = db.prepare("INSERT INTO embeds (id, created, title, descript
 const getartist = db.prepare("SELECT * FROM artists WHERE id = ?")
 const insertartist = db.prepare("INSERT OR IGNORE INTO ARTISTS (id, created, name, description, image) VALUES (?, strftime('%s', 'now'), ?, ?, ?)")
 const findbadartist = db.prepare("SELECT * FROM artist_blacklist WHERE ID = ?")
-const insertbadart = db.prepare("INSERT OR IGNORE INTO artist_blacklist (ID) VALUES (?)")
+const insertbadart = db.prepare("INSERT OR IGNORE INTO artist_blacklist (ID) VALUES (?);")
 const findbadtrack = db.prepare("SELECT * FROM track_blacklist WHERE ID = ?")
 const insertbadtrack = db.prepare("INSERT OR IGNORE INTO track_blacklist (ID) VALUES (?)")
 const findtrack = db.prepare("SELECT * FROM tracks WHERE id = ?")
@@ -114,13 +120,16 @@ app.get('/browse/artist/:id/json', async (req, res) => {
     })
 })
 
+
 app.post('/gitPush', async (req, res) => {
     let secure = req.get('x-hub-signature-256')
 
     if (secure != undefined) {
-        let verif = crypt.verify('SHA256', req.body, secret, secure)
-        if (verif) {
+        let verif = crypt.createHmac('SHA256', secret).update(req.body).digest('hex')
+        if (verif == secure) {
             console.log('good')
+            exec(`./update.sh ${pid}`)
+            res.status(200).send('UPDATING\nPLEASE HOLD...')
         }else {
             res.status(401).send('nice try')
         }
@@ -128,8 +137,8 @@ app.post('/gitPush', async (req, res) => {
         res.status(400).send('missing')
     }
 })
-
-// all of the browse code could be boiled down to a single thing tbf
+// TODO: DO THE UNDERMENTIONED
+// all the browse code could be boiled down to a single thing tbf
 app.get('(/browse)?/track/:id', async (req, res) => {
     console.log("TRACK REQUESTED")
     let dbres = await findtrack.get(req.params.id)

@@ -1,3 +1,4 @@
 #!/bin/bash
-apt install -y npm nodejs
-npm install /srv
+apk update
+apk add nodejs chromium
+npm install ~/tidalfix/

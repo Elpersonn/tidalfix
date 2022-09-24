@@ -1,2 +1,3 @@
-FROM ubuntu
-RUN /srv/install.sh
+FROM alpine
+RUN ~/tidalfix/install.sh
+ENTRYPOINT ["~/tidalfix/start.sh"]
