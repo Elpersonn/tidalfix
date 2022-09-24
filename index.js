@@ -6,7 +6,7 @@ const http = require('http')
 const puppeteer = require('puppeteer')
 const teplates = require('sprightly')
 
-import {secret} from './config.mjs'
+import {secret, port} from './config.mjs'
 import { exec } from 'node:child_process'
 import { pid } from 'node:process'
 
@@ -49,7 +49,6 @@ const reqoptns = {
     'Sec-Fetch-Site': 'none',
     'Sec-Fetch-User': '?1'
 }
-const port = 8080
 function ValidateId(req, res, next) {
     let num = parseInt(req.params.id)
     if (Number.isInteger(num)) {
