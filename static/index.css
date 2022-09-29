@@ -11,7 +11,9 @@
     position: relative;
     text-align: center;
 }
-
+iframe {
+    width: fit-content;
+}
 .center {
     position: relative;
     z-index: 10;
