@@ -145,6 +145,7 @@ app.post('/gitPush', async (req, res) => {
 app.get('(/browse)?/:type/:id', async (req, res) => {
     if (req.params.type.toLowerCase() != "album" && req.params.type.toLowerCase() != "track" && req.params.type.toLowerCase() != "artist" ){
         res.status(400).send("Wrong type")
+        return
     }//                                               vvvvvvvvvvvvvvvvvvvvvvvvvvvvv - Yes, this DOES have the possibility of an SQL injection but not when I literally sanitized it and checked it
     let dbres = await db.prepare(`SELECT * FROM ${req.params.type.toLowerCase() + "s"} WHERE id = ?`).get(req.params.id)
     if (dbres && dbres.title) {
